@@ -219,14 +219,14 @@
 <!-- RESULT -->
 <div class="screen" id="screen-result">
   <div class="result-emoji" id="result-emoji">🎉</div>
-  <div class="result-title" id="result-title">You Win</div>
+  <div class="result-title" id="result-title">You Win!</div>
   <div class="card">
     <button class="btn btn-primary" id="rematch-btn" onclick="requestRematch()">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
       Rematch
     </button>
     <button class="btn btn-danger" id="decline-btn" onclick="declineRematch()" style="margin-top:9px">
-      Decline
+      Decline Request
     </button>
     <div class="rematch-status" id="rematch-status"></div>
     <button class="btn btn-danger" style="margin-top:9px" onclick="goHome()">⟵ Back to Home</button>
@@ -333,7 +333,7 @@ function handleMessage(data) {
     else {
       document.getElementById('rematch-status').textContent = 'Opponent wants a rematch';
       document.getElementById('rematch-status').className = 'rematch-status pending';
-      document.getElementById('rematch-btn').textContent = 'Accept';
+      document.getElementById('rematch-btn').textContent = 'Accept Request';
       document.getElementById('decline-btn').classList.add('visible');
     }
   }
@@ -341,7 +341,7 @@ function handleMessage(data) {
     rematchRequested = false;
     opponentWantsRematch = false;
     document.getElementById('rematch-btn').disabled = false;
-    document.getElementById('rematch-btn').textContent = 'Rematch';
+    document.getElementById('rematch-btn').textContent = 'Request Rematch';
     document.getElementById('rematch-status').textContent = 'Opponent declined';
     document.getElementById('rematch-status').className = 'rematch-status declined';
     document.getElementById('decline-btn').classList.remove('visible');
@@ -474,7 +474,7 @@ function requestRematch() {
   socket.send(JSON.stringify({ type: 'rematch' }));
   document.getElementById('rematch-btn').disabled = true;
   document.getElementById('rematch-btn').textContent = 'Waiting…';
-  document.getElementById('rematch-status').textContent = 'Request sent…';
+  document.getElementById('rematch-status').textContent = 'Request sent';
   document.getElementById('rematch-status').className = 'rematch-status pending';
 }
 
@@ -484,7 +484,7 @@ function declineRematch() {
   rematchRequested = false;
   socket.send(JSON.stringify({ type: 'rematch_declined' }));
   document.getElementById('decline-btn').classList.remove('visible');
-  document.getElementById('rematch-btn').textContent = 'Rematch';
+  document.getElementById('rematch-btn').textContent = 'Request Rematch';
   document.getElementById('rematch-btn').disabled = false;
   document.getElementById('rematch-status').textContent = '';
   document.getElementById('rematch-status').className = 'rematch-status';
